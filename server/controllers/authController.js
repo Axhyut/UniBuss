@@ -19,7 +19,7 @@ const signup = async (req, res) => {
 
   try {
     // Check user type and create accordingly
-    if (userType === "driver") {
+    if (userType === "bus") {
       const newDriver = await Driver.create({
         email,
         firstName,

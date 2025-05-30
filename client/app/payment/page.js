@@ -57,8 +57,8 @@ const PaymentPage = () => {
     const validateBookingDetails = async () => {
       const requiredFields = [
         "scheduleId",
-        "passengerId", // This should contain the email
-        "driverId",
+        "userId", // This should contain the email
+        "busId",
         "locationFrom",
         "locationTo",
         "date",

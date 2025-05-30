@@ -32,12 +32,12 @@ module.exports = (sequelize) => {
   return Admin;
 };
 
-// models/driver.js
+// models/bus.js
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Driver = sequelize.define(
-    "Driver",
+  const Bus = sequelize.define(
+    "Bus",
     {
       id: {
         type: DataTypes.UUID,
@@ -60,10 +60,6 @@ module.exports = (sequelize) => {
       dateOfBirth: {
         type: DataTypes.DATE,
         allowNull: false,
-      },
-      wallet: {
-        type: DataTypes.DECIMAL(8, 2),
-        defaultValue: 0.0,
       },
       phoneNumber: {
         type: DataTypes.STRING,
@@ -99,33 +95,29 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      rating: {
-        type: DataTypes.DECIMAL(3, 2),
-        defaultValue: 0.0,
-      },
     },
     {
       timestamps: true,
-      tableName: "Drivers", // Explicitly specify table name
+      tableName: "Buses", // Explicitly specify table name
     }
   );
 
-  Driver.associate = (models) => {
-    Driver.hasMany(models.Schedule, {
-      foreignKey: "driverId",
+  Bus.associate = (models) => {
+    Bus.hasMany(models.Schedule, {
+      foreignKey: "busId",
       as: "schedules",
       onDelete: "CASCADE",
     });
   };
 
-  return Driver;
+  return Bus;
 };
 
-//model passenger.js
+//model user.js
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
-  const Passenger = sequelize.define(
-    "Passenger",
+  const User = sequelize.define(
+    "User",
     {
       id: {
         type: DataTypes.UUID,
@@ -156,10 +148,6 @@ module.exports = (sequelize) => {
       status: {
         type: DataTypes.STRING(20),
         defaultValue: "active",
-      },
-      wallet: {
-        type: DataTypes.DECIMAL(8, 2),
-        defaultValue: 0.0,
       },
       createdAt: {
         type: DataTypes.DATE,

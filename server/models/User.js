@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
-  const Passenger = sequelize.define(
-    "Passenger",
+  const User = sequelize.define(
+    "User",
     {
       id: {
         type: DataTypes.UUID,
@@ -32,10 +32,6 @@ module.exports = (sequelize) => {
       status: {
         type: DataTypes.STRING(20),
         defaultValue: "active",
-      },
-      wallet: {
-        type: DataTypes.DECIMAL(8, 2),
-        defaultValue: 0.0,
       },
       createdAt: {
         type: DataTypes.DATE,
