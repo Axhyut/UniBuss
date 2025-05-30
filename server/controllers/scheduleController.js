@@ -1,5 +1,5 @@
 //scheduleController.js
-const { PNR, Schedule, Driver, Passenger, sequelize } = require("../models");
+const { PNR, Schedule, Bus, User, sequelize } = require("../models");
 const {
   sendEmail,
   generateRideCompletionPassengerEmail,
@@ -46,7 +46,7 @@ const sendOtp = async (req, res) => {
       include: [
         {
           model: Passenger,
-          as: "passenger",
+          as: "user",
           attributes: ["email", "firstName", "lastName"],
         },
       ],
