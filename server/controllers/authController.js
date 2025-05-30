@@ -1,4 +1,4 @@
-const { Driver, Passenger, Admin } = require("../models"); // Import models
+const { Bus, User, Admin } = require("../models"); // Import models
 
 // Function to handle user signup
 const signup = async (req, res) => {
@@ -20,7 +20,7 @@ const signup = async (req, res) => {
   try {
     // Check user type and create accordingly
     if (userType === "bus") {
-      const newDriver = await Driver.create({
+      const newBus = await Bus.create({
         email,
         firstName,
         lastName,
@@ -37,9 +37,9 @@ const signup = async (req, res) => {
       });
       return res
         .status(201)
-        .json({ message: "Driver registered successfully", driver: newDriver });
-    } else if (userType === "passenger") {
-      const newPassenger = await Passenger.create({
+        .json({ message: "Driver registered successfully", driver: newBus });
+    } else if (userType === "user") {
+      const newUser = await User.create({
         email,
         firstName,
         lastName,
@@ -48,8 +48,8 @@ const signup = async (req, res) => {
         status: "active",
       });
       return res.status(201).json({
-        message: "Passenger registered successfully",
-        passenger: newPassenger,
+        message: "User registered successfully",
+        user: newUser,
       });
     } else {
       return res.status(400).json({ error: "Invalid user type" });
@@ -67,26 +67,26 @@ const checkUserExistence = async (req, res) => {
   console.log("Checking existence for email:", email);
 
   try {
-    // Check in Driver collection
-    const driver = await Driver.findOne({ where: { email } });
-    if (driver) {
+    // Check in us collection
+    const bus = await Bus.findOne({ where: { email } });
+    if (bus) {
       return res.json({
         exists: true,
-        userType: "driver",
-        userName: driver.firstName + " " + driver.lastName,
-        driverId: driver.id,
-        status: driver.status,
+        userType: "bus",
+        userName: bus.firstName + " " + bus.lastName,
+        driverId: bus.id,
+        status: bus.status,
       });
     }
 
-    // Check in Passenger collection
-    const passenger = await Passenger.findOne({ where: { email } });
-    if (passenger) {
+    // Check in User collection
+    const user = await User.findOne({ where: { email } });
+    if (user) {
       return res.json({
         exists: true,
-        userType: "passenger",
-        userName: passenger.firstName + " " + passenger.lastName,
-        passengerId: passenger.id,
+        userType: "user",
+        userName: user.firstName + " " + user.lastName,
+        passengerId: user.id,
       });
     }
 
