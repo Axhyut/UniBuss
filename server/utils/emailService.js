@@ -54,75 +54,6 @@ const generatePassengerEmail = (pnr, driver) => {
   return { subject, html };
 };
 
-// Generate driver email content
-const generateDriverEmail = (pnr, passenger) => {
-  const subject = `New Ride Assignment - PNR: ${pnr.PNRid}`;
-
-  const html = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">New Ride Assignment</h2>
-      <p>Dear Driver,</p>
-      <p>You have a new ride assignment. Here are the trip details:</p>
-      
-      <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
-        <p><strong>PNR Number:</strong> ${pnr.PNRid}</p>
-        <p><strong>Date:</strong> ${pnr.date}</p>
-        <p><strong>Time:</strong> ${pnr.time}</p>
-        <p><strong>Pick-up Location:</strong> ${pnr.locationFrom}</p>
-        <p><strong>Drop-off Location:</strong> ${pnr.locationTo}</p>
-        <p><strong>Distance:</strong> ${pnr.distance} km</p>
-      </div>
-
-      <div style="background-color: #e9ecef; padding: 20px; border-radius: 5px; margin: 20px 0;">
-        <h3 style="margin-top: 0;">Passenger Details</h3>
-        <p><strong>Name:</strong> ${passenger.firstName} ${passenger.lastName}</p>
-        <p><strong>Contact:</strong> ${passenger.phoneNumber}</p>
-      </div>
-
-      <p>Please ensure you arrive at the pickup location on time.</p>
-      <p>For any assistance, please contact our support team.</p>
-    </div>
-  `;
-
-  return { subject, html };
-};
-
-// Generate ride completion email for passenger
-const generateRideCompletionPassengerEmail = (pnr, driver) => {
-  const subject = `Ride Completed Successfully - PNR: ${pnr.PNRid}`;
-
-  const html = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">Ride Completed Successfully</h2>
-      <p>Dear Passenger,</p>
-      <p>We are pleased to inform you that your ride has been successfully completed. Here are the details:</p>
-      
-      <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
-        <p><strong>PNR Number:</strong> ${pnr.PNRid}</p>
-        <p><strong>Date:</strong> ${pnr.date}</p>
-        <p><strong>Time:</strong> ${pnr.time}</p>
-        <p><strong>Pick-up Location:</strong> ${pnr.locationFrom}</p>
-        <p><strong>Drop-off Location:</strong> ${pnr.locationTo}</p>
-        <p><strong>Total Distance:</strong> ${pnr.distance} km</p>
-        <p><strong>Total Fare:</strong> ₹${pnr.price}</p>
-      </div>
-
-      <div style="background-color: #e9ecef; padding: 20px; border-radius: 5px; margin: 20px 0;">
-        <h3 style="margin-top: 0;">Driver Details</h3>
-        <p><strong>Name:</strong> ${driver.firstName} ${driver.lastName}</p>
-        <p><strong>Vehicle Number:</strong> ${driver.vehicleNumber}</p>
-        <p><strong>Vehicle Type:</strong> ${driver.vehicleType}</p>
-        <p><strong>Contact:</strong> ${driver.phoneNumber}</p>
-      </div>
-
-      <p>We hope you had a pleasant journey. Thank you for choosing our service!</p>
-      <p>For any further assistance or feedback, please contact our support team.</p>
-    </div>
-  `;
-
-  return { subject, html };
-};
-
 // Generate ride completion email for driver
 const generateRideCompletionDriverEmail = (pnr, passenger) => {
   const subject = `Ride Completed Successfully - PNR: ${pnr.PNRid}`;
@@ -157,34 +88,6 @@ const generateRideCompletionDriverEmail = (pnr, passenger) => {
   return { subject, html };
 };
 
-const generateVerificationEmail = (driver) => {
-  const subject = `RideWise Account Verification Complete`;
-  const html = `
-  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-    <h2 style="color: #333;">Account Verification Complete</h2>
-    <p>Dear ${driver.firstName},</p>
-    <p>Congratulations! Your RideWise driver account has been successfully verified.</p>
-    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
-      <p><strong>Account Details:</strong></p>
-      <p><strong>Name:</strong> ${driver.firstName} ${driver.lastName}</p>
-      <p><strong>Driver ID:</strong> ${driver.id}</p>
-      <p><strong>Vehicle:</strong> ${driver.vehicleNumber} (${driver.vehicleType})</p>
-    </div>
-    <div style="background-color: #e9ecef; padding: 20px; border-radius: 5px; margin: 20px 0;">
-      <h3 style="margin-top: 0;">Next Steps</h3>
-      <p>You can now:</p>
-      <p>✓ Schedule rides</p>
-      <p>✓ Receive payments directly to your linked account</p>
-      <p>✓ Access the driver dashboard</p>
-    </div>
-    <p>Log in to your RideWise driver app to start earning today!</p>
-    <p>For any assistance, please contact our driver support team at ridewise.care@gmail.com</p>
-    <p>Welcome to the RideWise community!</p>
-  </div>
-  `;
-  return { subject, html };
-};
-
 // Enhanced send email function
 const sendEmail = async (to, { subject, html }, retries = 2) => {
   const transporter = createTransporter();
@@ -214,8 +117,6 @@ const sendEmail = async (to, { subject, html }, retries = 2) => {
 module.exports = {
   sendEmail,
   generatePassengerEmail,
-  generateDriverEmail,
   generateRideCompletionPassengerEmail,
-  generateRideCompletionDriverEmail,
   generateVerificationEmail,
 };

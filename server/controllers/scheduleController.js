@@ -2,40 +2,10 @@
 const { PNR, Schedule, Driver, Passenger, sequelize } = require("../models");
 const {
   sendEmail,
-  generatePassengerEmail,
-  generateDriverEmail,
   generateRideCompletionPassengerEmail,
   generateRideCompletionDriverEmail,
 } = require("../utils/emailService");
 const { Op, where } = require("sequelize");
-
-// Generate OTP email content
-const generateOtpEmail = (otp, driverName) => {
-  const subject = "Ride Completion OTP";
-
-  const html = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">Ride Completion Verification</h2>
-      <p>Dear Passenger,</p>
-      <p>Your driver ${driverName} has initiated the ride completion process.</p>
-      
-      <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
-        <h3 style="margin: 0; color: #333; text-align: center;">Your OTP</h3>
-        <p style="font-size: 32px; font-weight: bold; text-align: center; margin: 10px 0; letter-spacing: 5px;">
-          ${otp}
-        </p>
-        <p style="color: #666; text-align: center; margin: 0;">
-          This OTP will expire in 5 minutes
-        </p>
-      </div>
-
-      <p>Please share this OTP with your driver to complete the ride.</p>
-      <p>If you didn't request this OTP, please contact our support team immediately.</p>
-    </div>
-  `;
-
-  return { subject, html };
-};
 
 const sendOtp = async (req, res) => {
   const transaction = await sequelize.transaction();
@@ -51,8 +21,8 @@ const sendOtp = async (req, res) => {
       },
       include: [
         {
-          model: Driver,
-          as: "driver",
+          model: Bus,
+          as: "bus",
           attributes: ["firstName", "lastName"],
         },
       ],
