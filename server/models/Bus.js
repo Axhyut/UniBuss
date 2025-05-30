@@ -48,12 +48,12 @@ module.exports = (sequelize) => {
   );
 
   Bus.associate = (models) => {
-    Driver.hasMany(models.Schedule, {
-      foreignKey: "driverId",
+    Bus.hasMany(models.Schedule, {
+      foreignKey: "busId",
       as: "schedules",
       onDelete: "CASCADE",
     });
   };
 
-  return Driver;
+  return Bus;
 };

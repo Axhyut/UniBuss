@@ -46,5 +46,5 @@ module.exports = (sequelize) => {
       timestamps: true,
     }
   );
-  return Passenger;
+  return User;
 };
