@@ -1,10 +1,10 @@
 // controllers/bookingController.js
-const { PNR, Schedule, Driver, Passenger } = require("../models");
+const { PNR, Schedule, Driver, User } = require("../models");
 const { v4: uuidv4 } = require("uuid");
 const {
   sendEmail,
-  generatePassengerEmail,
-  generateDriverEmail,
+  generateUserEmail,
+  generateBusEmail,
 } = require("../utils/emailService");
 const { sequelize } = require("../models");
 const logger = require("../utils/logger"); // Assumed logger utility
@@ -16,8 +16,8 @@ const createBooking = async (req, res) => {
   try {
     const {
       scheduleId,
-      passengerId,
-      driverId,
+      userId,
+      busId,
       locationFrom,
       locationTo,
       date,
@@ -29,8 +29,8 @@ const createBooking = async (req, res) => {
     // Validate required fields with more comprehensive checks
     const requiredFields = [
       "scheduleId",
-      "passengerId",
-      "driverId",
+      "userId",
+      "busId",
       "locationFrom",
       "locationTo",
       "date",
@@ -59,8 +59,8 @@ const createBooking = async (req, res) => {
       {
         PNRid: uuidv4(),
         scheduleId,
-        passengerId,
-        driverId,
+        userId,
+        busId,
         locationFrom,
         locationTo,
         date,
@@ -84,29 +84,29 @@ const createBooking = async (req, res) => {
       }
     );
 
-    //wallet logic for passenger
-    await Passenger.update(
+    //wallet logic for user
+    await User.update(
       { wallet: sequelize.literal(`wallet - ${price}`) },
       {
         where: {
-          id: passengerId,
+          id: userId,
         },
         transaction,
       }
     );
 
-    // Fetch driver and passenger details
-    const [driver, passenger] = await Promise.all([
-      Driver.findByPk(driverId),
-      Passenger.findByPk(passengerId),
+    // Fetch driver and user details
+    const [driver, user] = await Promise.all([
+      Driver.findByPk(busId),
+      User.findByPk(userId),
     ]);
 
-    // Validate driver and passenger
-    if (!driver || !passenger) {
+    // Validate driver and user
+    if (!driver || !user) {
       await transaction.rollback();
       return res.status(404).json({
         success: false,
-        message: "Driver or Passenger not found",
+        message: "Driver or User not found",
       });
     }
 
@@ -115,15 +115,15 @@ const createBooking = async (req, res) => {
 
     // Async email sending with better error handling
     try {
-      const [passengerEmailSent, driverEmailSent] = await Promise.allSettled([
-        sendEmail(passenger.email, generatePassengerEmail(pnr, driver)),
-        sendEmail(driver.email, generateDriverEmail(pnr, passenger)),
+      const [userEmailSent, busEmailSent] = await Promise.allSettled([
+        sendEmail(user.email, generateUserEmail(pnr, driver)),
+        sendEmail(driver.email, generateBusEmail(pnr, user)),
       ]);
 
       // Log email sending results
       logger.info("Email Sending Results", {
-        passenger: passengerEmailSent.status,
-        driver: driverEmailSent.status,
+        user: userEmailSent.status,
+        driver: busEmailSent.status,
       });
 
       // Optional: You could implement a notification system
@@ -177,8 +177,8 @@ const getBookingDetails = async (req, res) => {
           ],
         },
         {
-          model: Passenger,
-          as: "passenger",
+          model: User,
+          as: "user",
           attributes: ["firstName", "lastName", "phoneNumber"],
         },
       ],
@@ -210,10 +210,10 @@ const getBookingDetails = async (req, res) => {
               phoneNumber: booking.driver.phoneNumber,
             }
           : null,
-        passenger: booking.passenger
+        user: booking.user
           ? {
-              name: `${booking.passenger.firstName} ${booking.passenger.lastName}`,
-              phoneNumber: booking.passenger.phoneNumber,
+              name: `${booking.user.firstName} ${booking.user.lastName}`,
+              phoneNumber: booking.user.phoneNumber,
             }
           : null,
       },
@@ -229,13 +229,13 @@ const getBookingDetails = async (req, res) => {
   }
 };
 
-const getPassengerBookings = async (req, res) => {
+const getUserBookings = async (req, res) => {
   try {
-    const { passengerId } = req.params;
-    console.log(passengerId);
+    const { userId } = req.params;
+    console.log(userId);
 
     const bookings = await PNR.findAll({
-      where: { passengerId },
+      where: { userId },
       include: [
         {
           model: Driver,
@@ -276,7 +276,7 @@ const getPassengerBookings = async (req, res) => {
       bookings: formattedBookings,
     });
   } catch (error) {
-    console.error("Error fetching passenger bookings:", error);
+    console.error("Error fetching user bookings:", error);
     res.status(500).json({
       success: false,
       message: "Internal server error while fetching bookings",
@@ -425,6 +425,6 @@ const rateDriver = async (req, res) => {
 module.exports = {
   createBooking,
   getBookingDetails,
-  getPassengerBookings,
+  getUserBookings,
   rateDriver,
 };

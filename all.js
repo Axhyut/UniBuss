@@ -32,12 +32,12 @@ module.exports = (sequelize) => {
   return Admin;
 };
 
-// models/bus.js
+// models/driver.js
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Bus = sequelize.define(
-    "Bus",
+  const Driver = sequelize.define(
+    "Driver",
     {
       id: {
         type: DataTypes.UUID,
@@ -98,19 +98,19 @@ module.exports = (sequelize) => {
     },
     {
       timestamps: true,
-      tableName: "Buses", // Explicitly specify table name
+      tableName: "Drivers", // Explicitly specify table name
     }
   );
 
-  Bus.associate = (models) => {
-    Bus.hasMany(models.Schedule, {
-      foreignKey: "busId",
+  Driver.associate = (models) => {
+    Driver.hasMany(models.Schedule, {
+      foreignKey: "driverId",
       as: "schedules",
       onDelete: "CASCADE",
     });
   };
 
-  return Bus;
+  return Driver;
 };
 
 //model user.js
@@ -162,7 +162,7 @@ module.exports = (sequelize) => {
       timestamps: true,
     }
   );
-  return Passenger;
+  return User;
 };
 
 // models/schedule.js
@@ -181,7 +181,7 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Drivers", // Make sure this matches the table name
+          model: "driveres", // Make sure this matches the table name
           key: "id",
         },
       },
@@ -218,8 +218,8 @@ module.exports = (sequelize) => {
       tableName: "Schedules", // Explicitly specify table name
       indexes: [
         {
-          fields: ["driverId", "date"],
-          name: "schedule_driver_date_idx",
+          fields: ["busId", "date"],
+          name: "schedule_bus_date_idx",
         },
       ],
     }
@@ -227,7 +227,7 @@ module.exports = (sequelize) => {
 
   Schedule.associate = (models) => {
     Schedule.belongsTo(models.Driver, {
-      foreignKey: "driverId",
+      foreignKey: "busId",
       as: "driver",
       onDelete: "CASCADE",
     });
@@ -249,20 +249,20 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      passengerId: {
+      userId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Passengers",
+          model: "Users",
           key: "id",
         },
         onDelete: "CASCADE",
       },
-      driverId: {
+      busId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Drivers",
+          model: "Buses",
           key: "id",
         },
         onDelete: "SET NULL",
@@ -328,12 +328,12 @@ module.exports = (sequelize) => {
           name: "pnr_status_idx",
         },
         {
-          fields: ["passengerId"],
-          name: "pnr_passenger_idx",
+          fields: ["userId"],
+          name: "pnr_user_idx",
         },
         {
-          fields: ["driverId"],
-          name: "pnr_driver_idx",
+          fields: ["busId"],
+          name: "pnr_bus_idx",
         },
         {
           fields: ["scheduleId"],
@@ -346,13 +346,13 @@ module.exports = (sequelize) => {
   // Updated associations
   PNR.associate = (models) => {
     PNR.belongsTo(models.Driver, {
-      foreignKey: "driverId",
+      foreignKey: "busId",
       as: "driver",
     });
 
-    PNR.belongsTo(models.Passenger, {
-      foreignKey: "passengerId",
-      as: "passenger",
+    PNR.belongsTo(models.User, {
+      foreignKey: "userId",
+      as: "user",
     });
 
     PNR.belongsTo(models.Schedule, {

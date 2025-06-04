@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Driver, Passenger } = require("../models");
+const { Driver, User } = require("../models");
 const { Op } = require("sequelize");
 const {
   sendEmail,
@@ -35,10 +35,10 @@ router.get("/api/drivers", async (req, res) => {
   }
 });
 
-// Get all passengers
-router.get("/api/passengers", async (req, res) => {
+// Get all users
+router.get("/api/users", async (req, res) => {
   try {
-    const passengers = await Passenger.findAll({
+    const users = await User.findAll({
       attributes: [
         "id",
         "firstName",
@@ -51,10 +51,10 @@ router.get("/api/passengers", async (req, res) => {
       ],
       order: [["createdAt", "DESC"]],
     });
-    res.json(passengers);
+    res.json(users);
   } catch (error) {
-    console.error("Error fetching passengers:", error);
-    res.status(500).json({ error: "Failed to fetch passengers" });
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Failed to fetch users" });
   }
 });
 
@@ -116,8 +116,8 @@ router.get("/api/admin/dashboard/stats", async (req, res) => {
     const pendingDrivers = await Driver.count({
       where: { status: "inactive" },
     });
-    const totalPassengers = await Passenger.count();
-    const activePassengers = await Passenger.count({
+    const totalUsers = await User.count();
+    const activeUsers = await User.count({
       where: { status: "active" },
     });
 
@@ -130,7 +130,7 @@ router.get("/api/admin/dashboard/stats", async (req, res) => {
         },
       },
     });
-    const newPassengers = await Passenger.count({
+    const newUsers = await User.count({
       where: {
         createdAt: {
           [Op.gte]: lastWeek,
@@ -145,10 +145,10 @@ router.get("/api/admin/dashboard/stats", async (req, res) => {
         pending: pendingDrivers,
         newLastWeek: newDrivers,
       },
-      passengers: {
-        total: totalPassengers,
-        active: activePassengers,
-        newLastWeek: newPassengers,
+      users: {
+        total: totalUsers,
+        active: activeUsers,
+        newLastWeek: newUsers,
       },
     });
   } catch (error) {
@@ -180,12 +180,12 @@ router.get("/api/drivers/search", async (req, res) => {
   }
 });
 
-// Search passengers
-router.get("/api/passengers/search", async (req, res) => {
+// Search users
+router.get("/api/users/search", async (req, res) => {
   const { query } = req.query;
 
   try {
-    const passengers = await Passenger.findAll({
+    const users = await User.findAll({
       where: {
         [Op.or]: [
           { firstName: { [Op.iLike]: `%${query}%` } },
@@ -195,10 +195,10 @@ router.get("/api/passengers/search", async (req, res) => {
       },
     });
 
-    res.json(passengers);
+    res.json(users);
   } catch (error) {
-    console.error("Error searching passengers:", error);
-    res.status(500).json({ error: "Failed to search passengers" });
+    console.error("Error searching users:", error);
+    res.status(500).json({ error: "Failed to search users" });
   }
 });
 
@@ -220,21 +220,21 @@ router.get("/api/drivers/:id", async (req, res) => {
   }
 });
 
-// Get passenger details by ID
-router.get("/api/passengers/:id", async (req, res) => {
+// Get user details by ID
+router.get("/api/users/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const passenger = await Passenger.findByPk(id);
+    const user = await User.findByPk(id);
 
-    if (!passenger) {
-      return res.status(404).json({ error: "Passenger not found" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.json(passenger);
+    res.json(user);
   } catch (error) {
-    console.error("Error fetching passenger details:", error);
-    res.status(500).json({ error: "Failed to fetch passenger details" });
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Failed to fetch user details" });
   }
 });
 

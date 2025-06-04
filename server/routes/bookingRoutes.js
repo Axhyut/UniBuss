@@ -8,8 +8,8 @@ router.post("/create", bookingController.createBooking);
 // Get booking details by PNR
 router.get("/pnr/:pnr", bookingController.getBookingDetails);
 
-// Fix: Changed from '/passenger/passengerId' to '/passenger/:passengerId'
-router.get("/passenger/:passengerId", bookingController.getPassengerBookings);
+// Fix: Changed from '/user/userId' to '/user/:userId'
+router.get("/user/:userId", bookingController.getUserBookings);
 
 router.post("/rate", bookingController.rateDriver);
 

@@ -9,11 +9,11 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      passengerId: {
+      userId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: "Passengers",
+          model: "Users",
           key: "id",
         },
         onDelete: "CASCADE",
@@ -104,8 +104,8 @@ module.exports = (sequelize) => {
           name: "pnr_status_idx",
         },
         {
-          fields: ["passengerId"],
-          name: "pnr_passenger_idx",
+          fields: ["userId"],
+          name: "pnr_user_idx",
         },
         {
           fields: ["driverId"],
@@ -125,9 +125,9 @@ module.exports = (sequelize) => {
       as: "driver",
     });
 
-    PNR.belongsTo(models.Passenger, {
-      foreignKey: "passengerId",
-      as: "passenger",
+    PNR.belongsTo(models.User, {
+      foreignKey: "userId",
+      as: "user",
     });
 
     PNR.belongsTo(models.Schedule, {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Clock, Shield, MapPin, CreditCard } from "lucide-react";
 
-const PassengerFeatures = () => {
+const UserFeatures = () => {
   const features = [
     {
       icon: Clock,
@@ -40,7 +40,7 @@ const PassengerFeatures = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-6">
             <span className="bg-gradient-to-r from-gray-800 to-gray-950 bg-clip-text text-transparent">
-              Why Passengers Love RideWise
+              Why Users Love UniBuss
             </span>
           </h2>
           <p className="text-gray-600 text-md max-w-2xl mx-auto">
@@ -105,4 +105,4 @@ const PassengerFeatures = () => {
   );
 };
 
-export default PassengerFeatures;
+export default UserFeatures;

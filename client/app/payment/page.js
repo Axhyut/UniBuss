@@ -28,8 +28,8 @@ const PaymentPage = () => {
 
   const bookingDetails = {
     scheduleId: searchParams.get("scheduleId"),
-    passengerId: searchParams.get("passengerId"),
-    driverId: searchParams.get("driverId"),
+    userId: searchParams.get("userId"),
+    busId: searchParams.get("busId"),
     locationFrom: decodeURIComponent(searchParams.get("pickupLocation")),
     locationTo: decodeURIComponent(searchParams.get("dropoffLocation")),
     date: searchParams.get("date"),
@@ -126,7 +126,7 @@ const PaymentPage = () => {
       // Create booking with PNR
       const response = await axios.post(`${BASE_URL}/api/booking/create`, {
         scheduleId: bookingDetails.scheduleId,
-        passengerId: bookingDetails.passengerId,
+        userId: bookingDetails.userId,
         driverId: bookingDetails.driverId,
         locationFrom: bookingDetails.locationFrom,
         locationTo: bookingDetails.locationTo,

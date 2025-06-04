@@ -1,8 +1,7 @@
 const { DataTypes } = require("sequelize");
-
 module.exports = (sequelize) => {
-  const Driver = sequelize.define(
-    "Driver",
+  const User = sequelize.define(
+    "User",
     {
       id: {
         type: DataTypes.UUID,
@@ -14,46 +13,42 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       phoneNumber: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      licenseNumber: {
-        type: DataTypes.STRING,
-        unique: true,
+      gender: {
+        type: DataTypes.STRING(20),
         allowNull: false,
-      },
-      vehicleNumber: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false,
-      },
-      vehicleType: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      isAvailable: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
       },
       status: {
         type: DataTypes.STRING(20),
-        defaultValue: "inactive",
+        defaultValue: "active",
+      },
+      wallet: {
+        type: DataTypes.DECIMAL(8, 2),
+        defaultValue: 0.0,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
       },
     },
     {
       timestamps: true,
-      tableName: "Buses", // Explicitly specify table name
     }
   );
-
-  Driver.associate = (models) => {
-    Driver.hasMany(models.Schedule, {
-      foreignKey: "busId",
-      as: "schedules",
-      onDelete: "CASCADE",
-    });
-  };
-
-  return Driver;
+  return User;
 };

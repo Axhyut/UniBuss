@@ -1,4 +1,4 @@
-const { Bus, User, Admin } = require("../models"); // Import models
+const { Driver, User, Admin } = require("../models"); // Import models
 
 // Function to handle user signup
 const signup = async (req, res) => {
@@ -19,8 +19,8 @@ const signup = async (req, res) => {
 
   try {
     // Check user type and create accordingly
-    if (userType === "bus") {
-      const newBus = await Bus.create({
+    if (userType === "driver") {
+      const newBus = await Driver.create({
         email,
         firstName,
         lastName,
@@ -68,14 +68,14 @@ const checkUserExistence = async (req, res) => {
 
   try {
     // Check in us collection
-    const bus = await Bus.findOne({ where: { email } });
-    if (bus) {
+    const driver = await Driver.findOne({ where: { email } });
+    if (driver) {
       return res.json({
         exists: true,
-        userType: "bus",
-        userName: bus.firstName + " " + bus.lastName,
-        driverId: bus.id,
-        status: bus.status,
+        userType: "driver",
+        userName: driver.firstName + " " + driver.lastName,
+        driverId: driver.id,
+        status: driver.status,
       });
     }
 
@@ -86,7 +86,7 @@ const checkUserExistence = async (req, res) => {
         exists: true,
         userType: "user",
         userName: user.firstName + " " + user.lastName,
-        passengerId: user.id,
+        userId: user.id,
       });
     }
 
@@ -140,11 +140,11 @@ const getProfile = async (req, res) => {
       });
     }
 
-    const passenger = await Passenger.findOne({ where: { email } });
-    if (passenger) {
+    const user = await User.findOne({ where: { email } });
+    if (user) {
       return res.json({
-        userType: "passenger",
-        ...passenger.dataValues,
+        userType: "user",
+        ...user.dataValues,
       });
     }
 
@@ -171,14 +171,14 @@ const updateProfile = async (req, res) => {
       });
     }
 
-    // Check if user is passenger
-    const passenger = await Passenger.findOne({ where: { email } });
-    if (passenger) {
-      await Passenger.update(updates, { where: { email } });
-      const updatedPassenger = await Passenger.findOne({ where: { email } });
+    // Check if user is user
+    const user = await User.findOne({ where: { email } });
+    if (user) {
+      await User.update(updates, { where: { email } });
+      const updatedUser = await User.findOne({ where: { email } });
       return res.json({
-        message: "Passenger profile updated",
-        ...updatedPassenger.dataValues,
+        message: "User profile updated",
+        ...updatedUser.dataValues,
       });
     }
 

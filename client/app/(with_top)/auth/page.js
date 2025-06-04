@@ -25,7 +25,7 @@ const AuthFlow = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [registrationComplete, setRegistrationComplete] = useState(false);
-  const [userType, setUserType] = useState("passenger");
+  const [userType, setUserType] = useState("user");
   const [isLoginMode, setIsLoginMode] = useState(false); // Toggle between login and signup
 
   const [authData, setAuthData] = useState({
@@ -559,12 +559,12 @@ const AuthFlow = () => {
                   <label className="flex items-center">
                     <input
                       type="radio"
-                      value="passenger"
-                      checked={userType === "passenger"}
-                      onChange={() => setUserType("passenger")}
+                      value="user"
+                      checked={userType === "user"}
+                      onChange={() => setUserType("user")}
                       className="mr-2"
                     />
-                    Passenger
+                    User
                   </label>
                   <label className="flex items-center">
                     <input

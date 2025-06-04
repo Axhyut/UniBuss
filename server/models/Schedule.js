@@ -53,10 +53,10 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
-          model: "Passengers",
+          model: "Users",
           key: "id",
         },
-        comment: "Passenger who reserved this schedule",
+        comment: "User who reserved this schedule",
       },
       completedAt: {
         type: DataTypes.DATE,
@@ -90,9 +90,9 @@ module.exports = (sequelize) => {
       onDelete: "CASCADE",
     });
 
-    Schedule.belongsTo(models.Passenger, {
+    Schedule.belongsTo(models.User, {
       foreignKey: "reservedBy",
-      as: "reservedPassenger",
+      as: "reservedUser",
       onDelete: "SET NULL",
     });
   };

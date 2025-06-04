@@ -272,7 +272,7 @@ const DriverSchedules = ({ driverId }) => {
                 PNR: {currentPnrDetails.pnr}
               </p>
               <p className="text-sm text-blue-600">
-                Passenger: {currentPnrDetails.passenger?.name}
+                User: {currentPnrDetails.user?.name}
               </p>
             </div>
           )}
@@ -462,7 +462,7 @@ const DriverSchedules = ({ driverId }) => {
       <Dialog open={isOtpModalOpen} onOpenChange={setIsOtpModalOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Enter Passenger OTP</DialogTitle>
+            <DialogTitle>Enter User OTP</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <Input

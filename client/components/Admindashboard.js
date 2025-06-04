@@ -114,8 +114,8 @@ const DriversTable = ({ drivers, handleVerifyDriver, isLoading }) => (
   </div>
 );
 
-// Passengers Table Component
-const PassengersTable = ({ passengers }) => (
+// Users Table Component
+const UsersTable = ({ users }) => (
   <div className="overflow-x-auto">
     <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
@@ -138,29 +138,29 @@ const PassengersTable = ({ passengers }) => (
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {passengers.map((passenger) => (
-          <tr key={passenger.id}>
+        {users.map((user) => (
+          <tr key={user.id}>
             <td className="px-6 py-4 whitespace-nowrap">
               <div className="flex items-center">
                 <div>
                   <div className="text-sm font-medium text-gray-900">
-                    {passenger.firstName} {passenger.lastName}
+                    {user.firstName} {user.lastName}
                   </div>
                 </div>
               </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {passenger.email}
+              {user.email}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {passenger.phoneNumber}
+              {user.phoneNumber}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              {passenger.gender}
+              {user.gender}
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
               <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                {passenger.status}
+                {user.status}
               </span>
             </td>
           </tr>
@@ -175,24 +175,24 @@ const Admindashboard = ({ adminName, onLogout }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeTab, setActiveTab] = useState("users");
   const [drivers, setDrivers] = useState([]);
-  const [passengers, setPassengers] = useState([]);
+  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [userTab, setUserTab] = useState("drivers"); // Default table view
 
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  // Fetch drivers and passengers data
+  // Fetch drivers and users data
   const [refresh, setRefresh] = useState(false); // State to trigger data refresh
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [driversRes, passengersRes] = await Promise.all([
+        const [driversRes, usersRes] = await Promise.all([
           axios.get(`${BASE_URL}/api/drivers`),
-          axios.get(`${BASE_URL}/api/passengers`),
+          axios.get(`${BASE_URL}/api/users`),
         ]);
         setDrivers(driversRes.data);
-        setPassengers(passengersRes.data);
+        setUsers(usersRes.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -306,7 +306,7 @@ const Admindashboard = ({ adminName, onLogout }) => {
           <div className="bg-white shadow rounded-lg p-6">
             {activeTab === "users" ? (
               <>
-                {/* Sub-tabs for Drivers & Passengers */}
+                {/* Sub-tabs for Drivers & Users */}
                 <div className="flex space-x-4 mb-4">
                   <button
                     onClick={() => setUserTab("drivers")}
@@ -319,14 +319,14 @@ const Admindashboard = ({ adminName, onLogout }) => {
                     Drivers
                   </button>
                   <button
-                    onClick={() => setUserTab("passengers")}
+                    onClick={() => setUserTab("users")}
                     className={`px-4 py-2 rounded-lg ${
-                      userTab === "passengers"
+                      userTab === "users"
                         ? "bg-blue-500 text-white"
                         : "bg-gray-200"
                     }`}
                   >
-                    Passengers
+                    Users
                   </button>
                 </div>
 
@@ -338,7 +338,7 @@ const Admindashboard = ({ adminName, onLogout }) => {
                     isLoading={isLoading}
                   />
                 ) : (
-                  <PassengersTable passengers={passengers} />
+                  <UsersTable users={users} />
                 )}
               </>
             ) : (

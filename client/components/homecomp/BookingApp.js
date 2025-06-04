@@ -40,7 +40,7 @@ const BookingApp = () => {
   const [noVehiclesMessage, setNoVehiclesMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [passengerId, setPassengerId] = useState("");
+  const [userId, setUserId] = useState("");
   const [isStatusPanelOpen, setIsStatusPanelOpen] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [geoError, setGeoError] = useState("");
@@ -388,10 +388,10 @@ const BookingApp = () => {
           const response = await axios.get(
             `${BASE_URL}/api/auth/user/${user.email}`
           );
-          setIsRegistrationComplete(response.data.userType === "passenger");
-          setIsLoggedIn(response.data.userType === "passenger");
-          if (response.data.userType === "passenger")
-            setPassengerId(response.data.passengerId);
+          setIsRegistrationComplete(response.data.userType === "user");
+          setIsLoggedIn(response.data.userType === "user");
+          if (response.data.userType === "user")
+            setUserId(response.data.userId);
         } catch (error) {
           setIsLoggedIn(false);
           setIsRegistrationComplete(false);
@@ -627,7 +627,7 @@ const BookingApp = () => {
                     <div className="flex items-start space-x-3">
                       <div className="flex-1">
                         <p className="text-orange-800 font-medium mb-2">
-                          Please log in as a passenger to proceed
+                          Please log in as a user to proceed
                         </p>
                         <Link
                           href="/auth"
@@ -676,7 +676,7 @@ const BookingApp = () => {
                     setSelectedVehicle={setSelectedVehicle}
                     isOpen={isPanelOpen}
                     onClose={() => setIsPanelOpen(false)}
-                    passengerId={passengerId}
+                    userId={userId}
                     pickupLocation={pickupLocation}
                     dropoffLocation={dropoffLocation}
                     selectedDate={selectedDate}
@@ -707,7 +707,7 @@ const BookingApp = () => {
         <BookingStatusPanel
           isOpen={isStatusPanelOpen}
           onClose={() => setIsStatusPanelOpen(false)}
-          passengerId={passengerId}
+          userId={userId}
         />
       )}
     </div>

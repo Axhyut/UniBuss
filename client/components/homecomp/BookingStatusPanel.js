@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import RatingModal from "./RatingModal";
 
-const BookingStatusPanel = ({ isOpen, onClose, passengerId }) => {
+const BookingStatusPanel = ({ isOpen, onClose, userId }) => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,18 +25,18 @@ const BookingStatusPanel = ({ isOpen, onClose, passengerId }) => {
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
-    if (isOpen && passengerId) {
+    if (isOpen && userId) {
       fetchBookings();
     }
-  }, [isOpen, passengerId]);
+  }, [isOpen, userId]);
 
   const fetchBookings = async () => {
     try {
-      console.log("Fetching bookings for passenger:", passengerId);
+      console.log("Fetching bookings for user:", userId);
       setIsLoading(true);
       setError("");
       const response = await axios.get(
-        `${BASE_URL}/api/booking/passenger/${passengerId}`
+        `${BASE_URL}/api/booking/user/${userId}`,
       );
       console.log(response.data);
       if (response.data.success) {

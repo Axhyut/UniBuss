@@ -12,7 +12,7 @@ const {
 } = require("../controllers/scheduleController");
 
 router.post("/schedules", addSchedule);
-router.get("/schedules/bus/:busId", getBusSchedules);
+router.get("/schedules/driver/:busId", getBusSchedules);
 router.put("/schedules/:scheduleId/cancel", cancelSchedule);
 router.post("/booking/check-availability", checkAvailableVehicles);
 router.post("/schedules/:scheduleId/send-otp", sendOtp);

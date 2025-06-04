@@ -30,27 +30,27 @@ export const DriverFeature = () => {
       icon: <DollarSign className="w-8 h-8" />,
       title: "Extra Income",
       description:
-        "Earn money by sharing your ride with passengers going your way",
+        "Earn money by sharing your ride with users going your way",
       color: "from-gray-900 to-gray-900",
     },
     {
       icon: <Shield className="w-8 h-8" />,
       title: "Safe & Secure",
       description:
-        "Verified passengers and secure payment system for peace of mind",
+        "Verified users and secure payment system for peace of mind",
       color: "from-red-500 to-red-600",
     },
     {
       icon: <Star className="w-8 h-8" />,
       title: "Rating System",
       description:
-        "Build your reputation with our passenger rating and review system",
+        "Build your reputation with our user rating and review system",
       color: "from-yellow-500 to-yellow-600",
     },
     {
       icon: <Users className="w-8 h-8" />,
       title: "Community",
-      description: "Join a growing community of trusted drivers and passengers",
+      description: "Join a growing community of trusted drivers and users",
       color: "from-indigo-500 to-indigo-600",
     },
     {

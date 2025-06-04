@@ -18,14 +18,14 @@ const createTransporter = () => {
   });
 };
 
-// Generate passenger email content
-const generatePassengerEmail = (pnr, driver) => {
+// Generate user email content
+const generateUserEmail = (pnr, driver) => {
   const subject = `Booking Confirmation - PNR: ${pnr.PNRid}`;
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Your Ride is Confirmed!</h2>
-      <p>Dear Passenger,</p>
+      <p>Dear User,</p>
       <p>Your booking has been successfully confirmed. Here are your trip details:</p>
       
       <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
@@ -55,7 +55,7 @@ const generatePassengerEmail = (pnr, driver) => {
 };
 
 // Generate ride completion email for driver
-const generateRideCompletionDriverEmail = (pnr, passenger) => {
+const generateRideCompletionDriverEmail = (pnr, user) => {
   const subject = `Ride Completed Successfully - PNR: ${pnr.PNRid}`;
 
   const html = `
@@ -75,12 +75,12 @@ const generateRideCompletionDriverEmail = (pnr, passenger) => {
       </div>
 
       <div style="background-color: #e9ecef; padding: 20px; border-radius: 5px; margin: 20px 0;">
-        <h3 style="margin-top: 0;">Passenger Details</h3>
-        <p><strong>Name:</strong> ${passenger.firstName} ${passenger.lastName}</p>
-        <p><strong>Contact:</strong> ${passenger.phoneNumber}</p>
+        <h3 style="margin-top: 0;">User Details</h3>
+        <p><strong>Name:</strong> ${user.firstName} ${user.lastName}</p>
+        <p><strong>Contact:</strong> ${user.phoneNumber}</p>
       </div>
 
-      <p>Thank you for providing excellent service to our passengers!</p>
+      <p>Thank you for providing excellent service to our users!</p>
       <p>For any issues or concerns, please contact our support team.</p>
     </div>
   `;
@@ -116,7 +116,7 @@ const sendEmail = async (to, { subject, html }, retries = 2) => {
 
 module.exports = {
   sendEmail,
-  generatePassengerEmail,
-  generateRideCompletionPassengerEmail,
+  generateUserEmail,
+  generateRideCompletionUserEmail,
   generateVerificationEmail,
 };

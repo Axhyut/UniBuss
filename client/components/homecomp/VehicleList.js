@@ -10,7 +10,7 @@ export const VehicleList = ({
   setSelectedVehicle,
   isOpen,
   onClose,
-  passengerId,
+  userId,
   pickupLocation,
   dropoffLocation,
   selectedDate,
@@ -44,14 +44,14 @@ export const VehicleList = ({
         `${BASE_URL}/api/schedules/reserve`,
         {
           scheduleId: selectedVehicleDetails.scheduleId,
-          passengerId: passengerId, // Make sure passengerId is available in scope
+          userId: userId, // Make sure userId is available in scope
         }
       );
 
       // Construct query parameters with reservation details
       const params = new URLSearchParams({
         scheduleId: selectedVehicleDetails.scheduleId,
-        passengerId,
+        userId,
         driverId: selectedVehicleDetails.driverId,
         pickupLocation: encodeURIComponent(pickupLocation),
         dropoffLocation: encodeURIComponent(dropoffLocation),

@@ -14,6 +14,18 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      dateOfBirth: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       phoneNumber: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,16 +52,36 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(20),
         defaultValue: "inactive",
       },
+      licenseValidity: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      gender: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      rating: {
+        type: DataTypes.DECIMAL(3, 2),
+        defaultValue: 0.0,
+      },
+      wallet: {
+        type: DataTypes.DECIMAL(8, 2),
+        defaultValue: 0.0,
+      },
+      totalRatings: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
     {
       timestamps: true,
-      tableName: "Buses", // Explicitly specify table name
+      tableName: "Drivers", // Explicitly specify table name
     }
   );
 
   Driver.associate = (models) => {
     Driver.hasMany(models.Schedule, {
-      foreignKey: "busId",
+      foreignKey: "driverId",
       as: "schedules",
       onDelete: "CASCADE",
     });

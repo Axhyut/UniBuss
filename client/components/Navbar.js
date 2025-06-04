@@ -41,7 +41,7 @@ const Navbar = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user?.email) {
         try {
-          // Check if user exists in backend and is fully registered and is passenger
+          // Check if user exists in backend and is fully registered and is user
           const response = await axios.get(
             `${BASE_URL}/api/auth/user/${user.email}`
           );
@@ -136,7 +136,7 @@ const Navbar = () => {
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Other navigation links */}
-            {userType === "passenger" && (
+            {userType === "user" && (
               <Link href="/">
                 <button className="block px-4 py-2 text-white hover:bg-gray-900 rounded">
                   Ride

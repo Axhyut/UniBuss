@@ -1,9 +1,9 @@
 //scheduleController.js
-const { PNR, Schedule, Bus, User, sequelize } = require("../models");
+const { PNR, Schedule, Driver, User, sequelize } = require("../models");
 const {
   sendEmail,
-  generateRideCompletionPassengerEmail,
-  generateRideCompletionDriverEmail,
+  generateRideCompletionUserEmail,
+  generateRideCompletionBusEmail,
 } = require("../utils/emailService");
 const { Op, where } = require("sequelize");
 
@@ -21,8 +21,8 @@ const sendOtp = async (req, res) => {
       },
       include: [
         {
-          model: Bus,
-          as: "bus",
+          model: Driver,
+          as: "driver",
           attributes: ["firstName", "lastName"],
         },
       ],
@@ -37,7 +37,7 @@ const sendOtp = async (req, res) => {
       });
     }
 
-    // Find the PNR record with passenger details
+    // Find the PNR record with user details
     const pnr = await PNR.findOne({
       where: {
         scheduleId,
@@ -45,7 +45,7 @@ const sendOtp = async (req, res) => {
       },
       include: [
         {
-          model: Passenger,
+          model: User,
           as: "user",
           attributes: ["email", "firstName", "lastName"],
         },
@@ -79,13 +79,13 @@ const sendOtp = async (req, res) => {
     const driverName = `${schedule.driver.firstName} ${schedule.driver.lastName}`;
     const emailContent = generateOtpEmail(otp, driverName);
 
-    await sendEmail(pnr.passenger.email, emailContent);
+    await sendEmail(pnr.user.email, emailContent);
 
     await transaction.commit();
 
     res.status(200).json({
       success: true,
-      message: "OTP sent successfully to passenger email",
+      message: "OTP sent successfully to user email",
     });
   } catch (error) {
     await transaction.rollback();
@@ -122,7 +122,7 @@ const verifyOtp = async (req, res) => {
         status: "active",
       },
       include: [
-        { model: Passenger, as: "passenger" },
+        { model: User, as: "user" },
         { model: Driver, as: "driver" },
       ],
       transaction,
@@ -199,17 +199,17 @@ const verifyOtp = async (req, res) => {
     // Commit transaction
     await transaction.commit();
 
-    // Send ride completion emails to passenger and driver
-    const passengerCompletionEmailContent =
-      generateRideCompletionPassengerEmail(pnr, pnr.driver);
+    // Send ride completion emails to user and driver
+    const userCompletionEmailContent =
+      generateRideCompletionUserEmail(pnr, pnr.driver);
     const driverCompletionEmailContent = generateRideCompletionDriverEmail(
       pnr,
-      pnr.passenger
+      pnr.user
     );
 
-    const passengerCompletionEmailSent = await sendEmail(
-      pnr.passenger.email,
-      passengerCompletionEmailContent
+    const userCompletionEmailSent = await sendEmail(
+      pnr.user.email,
+      userCompletionEmailContent
     );
     const driverCompletionEmailSent = await sendEmail(
       pnr.driver.email,
@@ -218,15 +218,15 @@ const verifyOtp = async (req, res) => {
 
     // Log email status
     console.log(
-      "Passenger completion email sent:",
-      passengerCompletionEmailSent
+      "User completion email sent:",
+      userCompletionEmailSent
     );
     console.log("Driver completion email sent:", driverCompletionEmailSent);
 
     res.status(200).json({
       success: true,
       message:
-        "Ride completed successfully, and emails sent to both passenger and driver",
+        "Ride completed successfully, and emails sent to both user and driver",
     });
   } catch (error) {
     await transaction.rollback();
@@ -437,11 +437,11 @@ const cancelSchedule = async (req, res) => {
 
     // Process each PNR
     for (const pnr of activePnrs) {
-      // Refund the amount to passenger's wallet
-      await Passenger.update(
+      // Refund the amount to user's wallet
+      await User.update(
         { wallet: sequelize.literal(`wallet + ${pnr.price}`) },
         {
-          where: { id: pnr.passengerId },
+          where: { id: pnr.userId },
           transaction,
         }
       );
@@ -472,7 +472,7 @@ const cancelSchedule = async (req, res) => {
 const reserve = async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
-    const { scheduleId, passengerId } = req.body;
+    const { scheduleId, userId } = req.body;
 
     // 1. Find schedule with lock to prevent race conditions
     const schedule = await Schedule.findByPk(scheduleId, {
@@ -503,7 +503,7 @@ const reserve = async (req, res) => {
       {
         status: "reserved",
         reservedAt: new Date(),
-        reservedBy: passengerId,
+        reservedBy: userId,
       },
       {
         where: { id: scheduleId },
@@ -516,7 +516,7 @@ const reserve = async (req, res) => {
       const currentSchedule = await Schedule.findByPk(scheduleId);
       if (
         currentSchedule?.status === "reserved" &&
-        currentSchedule.reservedBy === passengerId
+        currentSchedule.reservedBy === userId
       ) {
         await Schedule.update(
           {
@@ -965,8 +965,8 @@ const getPnrBySchedule = async (req, res) => {
       },
       include: [
         {
-          model: Passenger,
-          as: "passenger",
+          model: User,
+          as: "user",
           attributes: ["firstName", "lastName", "phoneNumber"],
         },
       ],
@@ -983,9 +983,9 @@ const getPnrBySchedule = async (req, res) => {
       success: true,
       booking: {
         pnr: pnr.PNRid,
-        passenger: {
-          name: `${pnr.passenger.firstName} ${pnr.passenger.lastName}`,
-          phoneNumber: pnr.passenger.phoneNumber,
+        user: {
+          name: `${pnr.user.firstName} ${pnr.user.lastName}`,
+          phoneNumber: pnr.user.phoneNumber,
         },
       },
     });
