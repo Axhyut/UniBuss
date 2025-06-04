@@ -12,11 +12,10 @@ const AboutPage = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative z-10 flex flex-col justify-center items-center h-full text-center">
           <h1 className="text-5xl font-bold mb-4">
-            Reimagining the Way the World Moves
+            Smart Travel for Smarter Campuses
           </h1>
           <p className="text-lg max-w-2xl">
-            Creating new ways for people, goods, and communities to move around
-            the world.
+            Plan. Track. Ride. Stay connected with your university transit system.
           </p>
         </div>
       </section>
@@ -25,32 +24,15 @@ const AboutPage = () => {
       <section className="max-w-5xl mx-auto px-6 py-12">
         <h2 className="text-4xl font-semibold mb-6 text-center">Our Mission</h2>
         <p className="text-center text-lg text-gray-700">
-          We are UniBuss. The go-getters. The kind of people who are relentless
-          about our mission to help people go anywhere and get anything and earn
-          their way. Movement is what we power. It’s our lifeblood. It runs
-          through our veins. It’s what gets us out of bed each morning. It
-          pushes us to constantly reimagine how we can move better. For you. For
-          all the places you want to go. For all the things you want to get. For
-          all the ways you want to earn. Across the entire world. In real time.
-          At the incredible speed of now. We are a tech company that connects
-          the physical and digital worlds to help make movement happen at the
-          tap of a button. Because we believe in a world where movement should
-          be accessible. So you can move and earn safely. In a way that’s
-          sustainable for our planet. And regardless of your gender, race,
-          religion, abilities, or sexual orientation, we champion your right to
-          move and earn freely and without fear. Of course, we haven’t always
-          gotten it right. But we’re not afraid of failure, because it makes us
-          better, wiser, and stronger. And it makes us even more committed to do
-          the right thing by our customers, local communities and cities, and
-          our incredibly diverse set of international partners. The idea for
-          UniBuss was born on a snowy night in Tezpur University in 2024, and
-          ever since then our DNA of reimagination and reinvention carries on.
-          We’ve grown into a global platform powering flexible earnings and the
-          movement of people and things in ever expanding ways. We’ve gone from
-          connecting rides on 4 wheels to 2 wheels. From drivers with background
-          checks to real-time verification, safety is a top priority every
-          single day. At UniBuss, the pursuit of reimagination is never
-          finished, never stops, and is always just beginning.
+          At UniBuss, our mission is to revolutionize the way people experience daily transportation within campuses and beyond. We are committed to creating a reliable, efficient, and user-friendly platform that bridges the gap between movement and technology.
+
+We aim to empower students, staff, and drivers by offering seamless connectivity through smart scheduling, real-time tracking, and safe travel experiences. What began as a simple idea at Tezpur University in 2024 has now evolved into a purpose-driven platform that reimagines how movement should feel—convenient, inclusive, and accessible to everyone.
+
+UniBuss stands for innovation, accountability, and inclusion. We strive to ensure that everyone—regardless of background, gender, or ability—has the opportunity to move freely, safely, and affordably. With every ride, we’re not just transporting people—we’re building trust, efficiency, and a smarter way to move.
+
+As we grow, we remain grounded in our core belief: movement drives opportunity, and everyone deserves the power to access it.
+
+
         </p>
       </section>
 
@@ -62,31 +44,27 @@ const AboutPage = () => {
           </h2>
           <div className="grid md:grid-cols-2 gap-10">
             <div className="bg-white p-8 shadow-md rounded-md">
-              <h3 className="text-2xl font-bold mb-4">Safety First</h3>
+              <h3 className="text-2xl font-bold mb-4">Reliability</h3>
               <p className="text-gray-700">
-                Ensuring the safety of our riders, drivers, and communities is
-                our top priority.
+                We ensure timely and dependable transportation so that students, staff, and drivers can trust UniBuss every day.
               </p>
             </div>
             <div className="bg-white p-8 shadow-md rounded-md">
-              <h3 className="text-2xl font-bold mb-4">Innovative Solutions</h3>
+              <h3 className="text-2xl font-bold mb-4">Innovation</h3>
               <p className="text-gray-700">
-                We push boundaries with technology to solve transportation
-                challenges worldwide.
+                We embrace new technologies to constantly improve the commuting experience and streamline campus travel.
               </p>
             </div>
             <div className="bg-white p-8 shadow-md rounded-md">
-              <h3 className="text-2xl font-bold mb-4">Empowering People</h3>
+              <h3 className="text-2xl font-bold mb-4">Inclusivity</h3>
               <p className="text-gray-700">
-                We create opportunities for individuals to thrive and achieve
-                their goals.
+                We believe transportation should be accessible to all—regardless of background, identity, or ability.
               </p>
             </div>
             <div className="bg-white p-8 shadow-md rounded-md">
-              <h3 className="text-2xl font-bold mb-4">Sustainability</h3>
+              <h3 className="text-2xl font-bold mb-4">Responsibility</h3>
               <p className="text-gray-700">
-                We are committed to a greener planet through eco-friendly
-                initiatives.
+                We are committed to building a sustainable future by encouraging eco-friendly mobility solutions and reducing our carbon footprint.
               </p>
             </div>
           </div>
@@ -99,9 +77,11 @@ const AboutPage = () => {
           Global Impact
         </h2>
         <p className="text-center text-lg text-gray-700 max-w-3xl mx-auto mb-10">
-          We’re continuously working to make a positive impact by creating
-          economic opportunities, connecting people and places, and reducing
-          environmental footprints in the cities we serve.
+          Overcrowding in university transportation has long been a challenge—primarily caused by students boarding buses at the same time without real-time information on availability. This often results in long waits, uncertainty, and congestion.
+
+UniBuss is transforming how students access and experience campus mobility. By providing real-time tracking, live seat availability, and route visibility, our platform empowers students to make informed decisions about when and where to board. With the ability to book seats in advance and view nearby pickup points, students no longer need to arrive early or wait in crowded locations.
+
+This system enhances efficiency, reduces unnecessary gatherings, and ensures a more comfortable and organized commuting experience for everyone on campus.
         </p>
       </section>
 
@@ -109,7 +89,7 @@ const AboutPage = () => {
       <footer className="bg-gray-800 py-10 text-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p>
-            &copy; {new Date().getFullYear()} RideWise. All rights reserved.
+            &copy; {new Date().getFullYear()} UniBuss. All rights reserved.
           </p>
           <nav className="mt-4">
             <a href="" className="mr-4 text-gray-300 hover:text-white">

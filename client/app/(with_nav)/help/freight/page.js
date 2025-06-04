@@ -10,7 +10,7 @@ const Freight = () => {
     {
       title: "Law enforcement data requests",
       description:
-        "Law enforcement can submit data requests through our public safety portal. Support is available 24 hours a day. Requests for information received from authorized law enforcement authorities will be responded to according to RideWise policies, terms, and applicable laws.",
+        "Law enforcement can submit data requests through our public safety portal. Support is available 24 hours a day. Requests for information received from authorized law enforcement authorities will be responded to according to UniBuss policies, terms, and applicable laws.",
     },
   ];
 

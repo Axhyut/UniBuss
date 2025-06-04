@@ -17,7 +17,7 @@ const createBooking = async (req, res) => {
     const {
       scheduleId,
       userId,
-      busId,
+      driverId,
       locationFrom,
       locationTo,
       date,
@@ -30,7 +30,7 @@ const createBooking = async (req, res) => {
     const requiredFields = [
       "scheduleId",
       "userId",
-      "busId",
+      "driverId",
       "locationFrom",
       "locationTo",
       "date",
@@ -60,7 +60,7 @@ const createBooking = async (req, res) => {
         PNRid: uuidv4(),
         scheduleId,
         userId,
-        busId,
+        driverId,
         locationFrom,
         locationTo,
         date,
@@ -74,7 +74,7 @@ const createBooking = async (req, res) => {
 
     // Update schedule status
     await Schedule.update(
-      { status: "busy" },
+      { status: "drivery" },
       {
         where: {
           id: scheduleId,
@@ -97,7 +97,7 @@ const createBooking = async (req, res) => {
 
     // Fetch driver and user details
     const [driver, user] = await Promise.all([
-      Driver.findByPk(busId),
+      Driver.findByPk(driverId),
       User.findByPk(userId),
     ]);
 
@@ -115,7 +115,7 @@ const createBooking = async (req, res) => {
 
     // Async email sending with better error handling
     try {
-      const [userEmailSent, busEmailSent] = await Promise.allSettled([
+      const [userEmailSent, driverEmailSent] = await Promise.allSettled([
         sendEmail(user.email, generateUserEmail(pnr, driver)),
         sendEmail(driver.email, generateBusEmail(pnr, user)),
       ]);
@@ -123,7 +123,7 @@ const createBooking = async (req, res) => {
       // Log email sending results
       logger.info("Email Sending Results", {
         user: userEmailSent.status,
-        driver: busEmailSent.status,
+        driver: driverEmailSent.status,
       });
 
       // Optional: You could implement a notification system

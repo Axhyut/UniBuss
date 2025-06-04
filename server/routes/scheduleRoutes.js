@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   addSchedule,
-  getBusSchedules,
+  getDriverSchedules,
   cancelSchedule,
   checkAvailableVehicles,
   sendOtp,
@@ -12,7 +12,7 @@ const {
 } = require("../controllers/scheduleController");
 
 router.post("/schedules", addSchedule);
-router.get("/schedules/driver/:busId", getBusSchedules);
+router.get("/schedules/driver/:driverId", getDriverSchedules);
 router.put("/schedules/:scheduleId/cancel", cancelSchedule);
 router.post("/booking/check-availability", checkAvailableVehicles);
 router.post("/schedules/:scheduleId/send-otp", sendOtp);

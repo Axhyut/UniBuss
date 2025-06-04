@@ -1,6 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { Car, LifeBuoy, Bike, Briefcase, Truck } from "lucide-react";
+import {
+  Clock,
+  MapPin,
+  LocateFixed,
+  UserCircle,
+  Search,
+  MessageSquare,
+} from "lucide-react";
 
 const HelpCard = ({ icon: Icon, title, href }) => (
   <Link href={href || "#"}>
@@ -16,31 +23,36 @@ const HelpCard = ({ icon: Icon, title, href }) => (
 );
 
 const HelpSection = () => {
-  const features = [
+  const helpTopics = [
     {
-      icon: Car,
-      title: "Riders",
-      href: "/help/riders",
+      icon: Clock,
+      title: "Bus Schedule & Timings",
+      href: "/help/bus-schedule",
     },
     {
-      icon: LifeBuoy,
-      title: "Driving & Delivering",
-      href: "/help/driving-and-delivering",
+      icon: LocateFixed,
+      title: "Live Bus Tracking",
+      href: "/help/live-tracking",
     },
     {
-      icon: Bike,
-      title: "Bikes & Scooters",
-      href: "/help/bikes-and-scooters",
+      icon: Search,
+      title: "Lost & Found",
+      href: "/help/lost-and-found",
     },
     {
-      icon: Briefcase,
-      title: "Business",
-      href: "/help/business",
+      icon: MapPin,
+      title: "Routes & Stops",
+      href: "/help/routes-and-stops",
     },
     {
-      icon: Truck,
-      title: "Freight",
-      href: "/help/freight",
+      icon: UserCircle,
+      title: "Login / ID Issues",
+      href: "/help/id-login",
+    },
+    {
+      icon: MessageSquare,
+      title: "Feedback & Suggestions",
+      href: "/help/feedback",
     },
   ];
 
@@ -49,17 +61,15 @@ const HelpSection = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">
-            Welcome to RideWise Support
+            Welcome to UniBus Support
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            We’re here to help. Looking for customer service contact
-            information? Explore support resources for the relevant products
-            below to find the best way to reach out about your issue.
+            Need help with campus transport? Select a category below to get the support you need.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {features.map((feature, index) => (
-            <HelpCard key={index} {...feature} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {helpTopics.map((topic, index) => (
+            <HelpCard key={index} {...topic} />
           ))}
         </div>
       </div>

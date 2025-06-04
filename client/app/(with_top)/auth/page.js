@@ -317,7 +317,7 @@ const AuthFlow = () => {
           <h2 className="text-2xl font-bold text-center mb-6">
             {step === "profile"
               ? "Complete Your Profile"
-              : "Welcome to RideWise"}
+              : "Welcome to UniBuss"}
           </h2>
 
           {error && (

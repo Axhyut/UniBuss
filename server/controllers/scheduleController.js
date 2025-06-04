@@ -17,7 +17,7 @@ const sendOtp = async (req, res) => {
     const schedule = await Schedule.findOne({
       where: {
         id: scheduleId,
-        status: "busy", // Only allow OTP generation for ongoing rides
+        status: "drivery", // Only allow OTP generation for ongoing rides
       },
       include: [
         {

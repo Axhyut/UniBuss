@@ -29,7 +29,7 @@ const PaymentPage = () => {
   const bookingDetails = {
     scheduleId: searchParams.get("scheduleId"),
     userId: searchParams.get("userId"),
-    busId: searchParams.get("busId"),
+    driverId: searchParams.get("driverId"),
     locationFrom: decodeURIComponent(searchParams.get("pickupLocation")),
     locationTo: decodeURIComponent(searchParams.get("dropoffLocation")),
     date: searchParams.get("date"),
@@ -58,7 +58,7 @@ const PaymentPage = () => {
       const requiredFields = [
         "scheduleId",
         "userId", // This should contain the email
-        "busId",
+        "driverId",
         "locationFrom",
         "locationTo",
         "date",

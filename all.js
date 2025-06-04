@@ -209,7 +209,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(20),
         defaultValue: "active",
         validate: {
-          isIn: [["active", "reserved", "busy", "completed", "cancelled"]],
+          isIn: [["active", "reserved", "drivery", "completed", "cancelled"]],
         },
       },
     },
@@ -218,8 +218,8 @@ module.exports = (sequelize) => {
       tableName: "Schedules", // Explicitly specify table name
       indexes: [
         {
-          fields: ["busId", "date"],
-          name: "schedule_bus_date_idx",
+          fields: ["driverId", "date"],
+          name: "schedule_driver_date_idx",
         },
       ],
     }
@@ -227,7 +227,7 @@ module.exports = (sequelize) => {
 
   Schedule.associate = (models) => {
     Schedule.belongsTo(models.Driver, {
-      foreignKey: "busId",
+      foreignKey: "driverId",
       as: "driver",
       onDelete: "CASCADE",
     });
@@ -258,7 +258,7 @@ module.exports = (sequelize) => {
         },
         onDelete: "CASCADE",
       },
-      busId: {
+      driverId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
@@ -332,8 +332,8 @@ module.exports = (sequelize) => {
           name: "pnr_user_idx",
         },
         {
-          fields: ["busId"],
-          name: "pnr_bus_idx",
+          fields: ["driverId"],
+          name: "pnr_driver_idx",
         },
         {
           fields: ["scheduleId"],
@@ -346,7 +346,7 @@ module.exports = (sequelize) => {
   // Updated associations
   PNR.associate = (models) => {
     PNR.belongsTo(models.Driver, {
-      foreignKey: "busId",
+      foreignKey: "driverId",
       as: "driver",
     });
 

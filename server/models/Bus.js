@@ -49,7 +49,7 @@ module.exports = (sequelize) => {
 
   Driver.associate = (models) => {
     Driver.hasMany(models.Schedule, {
-      foreignKey: "busId",
+      foreignKey: "driverId",
       as: "schedules",
       onDelete: "CASCADE",
     });

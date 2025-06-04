@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING(20),
         defaultValue: "active",
         validate: {
-          isIn: [["active", "reserved", "busy", "completed", "cancelled"]],
+          isIn: [["active", "reserved", "drivery", "completed", "cancelled"]],
         },
       },
       reservedAt: {

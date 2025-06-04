@@ -27,7 +27,7 @@ CREATE TABLE
 CREATE TABLE
   Schedules (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
-    busId UUID NOT NULL,
+    driverId UUID NOT NULL,
     pickupLocation TEXT NOT NULL,
     dropoffLocation TEXT NOT NULL,
     timeFrom TIME NOT NULL,
@@ -36,14 +36,14 @@ CREATE TABLE
     status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active', 'completed', 'cancelled')),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (busId) REFERENCES Buses (id) ON DELETE CASCADE
+    FOREIGN KEY (driverId) REFERENCES Buses (id) ON DELETE CASCADE
   );
 
 CREATE TABLE
   PNR (
     PNRid UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
     userId UUID NOT NULL,
-    busId UUID NOT NULL,
+    driverId UUID NOT NULL,
     locationFrom TEXT NOT NULL,
     locationTo TEXT NOT NULL,
     date DATE NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES User (id) ON DELETE CASCADE,
-    FOREIGN KEY (busId) REFERENCES Driver (id) ON DELETE SET NULL
+    FOREIGN KEY (driverId) REFERENCES Driver (id) ON DELETE SET NULL
   );
 
 CREATE TABLE
